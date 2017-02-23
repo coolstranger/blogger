@@ -1,0 +1,27 @@
+{
+  "name": "console",
+  "version": "1.0.0",
+  "description": "User Interface for Blogger",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coolstranger/blogger.git"
+  },
+  "author": "Aamir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coolstranger/blogger/issues"
+  },
+  "homepage": "https://github.com/coolstranger/blogger#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "fs": "0.0.1-security",
+    "jsonfile": "^2.4.0",
+    "node-uuid": "^1.4.7"
+  }
+}

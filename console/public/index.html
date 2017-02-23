@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogger Console</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/handler.js"></script>
+
+</head>
+<body onload="init()">
+
+<div id="wrapper">
+    <div id="leftWrapper">
+        <div id="listView">
+            <li><a href="javascript:displayHomePage()">Home</a></li>
+            <li id="loginTab" style="display:none"><a href="javascript:doLogin()">Login</a></li>
+            <li id="createBlogTab" style="display:none"><a href="javascript:displayCreateBlog()">Create Blog</a></li>
+            <li id="myDraftsTab" style="display:none"><a href="javascript:displayMyDrafts('','false')">My Drafts</a></li>
+            <li id="myBlogsTab" style="display:none"><a href="javascript:displayMyBlogs('','false')">My Blogs</a></li>
+            <li id="changePasswordTab" style="display:none"><a href="javascript:displayChangePassword()">Change Password</a></li>
+            <li id="logoutTab" style="display:none"><a href="javascript:doLogout()">Logout</a></li>
+        </div>
+    </div>
+
+    <div id="rightWrapper">
+        <div id="contentWrapper">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

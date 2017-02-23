@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="UTF-8">
+        <title>Blogger Console</title>
+
+        <link rel="stylesheet" href='css/bootstrap.min.css'>
+        <link rel="stylesheet" href="css/index.css">
+
+        <script src="js/jquery-3.1.1.js"></script>
+        <script src="js/login.js"></script>
+
+    </head>
+
+    <body onload="init()">
+        <div class="wrapper">
+        <form id="loginForm" class="form-signin" action="/login" method="post">
+          <h2 class="form-signin-heading"> Blogger Login</h2>
+          <input type="text" class="form-control" name="j_username" id="j_username" placeholder="Login Id"  autofocus="" />
+          <input type="password" class="form-control" name="j_password" id="j_password" placeholder="Password" />
+          <input type="button" id="loginButton" class="btn btn-lg btn-primary btn-block" value="Login"/>
+            <input type="button" id="newButton" class="btn btn-lg btn-primary btn-block" value="Sign Up"/>
+        </form>
+
+        <form id="createForm" class="form-signin" action="/user" method="post">
+            <h2 class="form-signin-heading">New  User</h2>
+            <input type="text" class="form-control" name="f_name" id="f_name" placeholder="First Name"  autofocus="" />
+            <input type="text" class="form-control" name="l_name" id="l_name" placeholder="Last Name"  autofocus="" />
+            <input type="text" class="form-control" name="login" id="login" placeholder="Login Id"  autofocus="" />
+            <input type="text" class="form-control" name="email" id="email" placeholder="Email"  autofocus="" />
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+            <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" />
+            <input type="button" id="createButton" class="btn btn-lg btn-primary btn-block" value="Create"/>
+            <input type="button" id="cancelButton" class="btn btn-lg btn-primary btn-block" value="Cancel"/>
+        </form>
+
+
+        <form id="errorForm" class="form-signin" style="display:none" >
+            <h4 class="form-signin-heading">Status</h4>
+            <div id="errorDiv">
+
+            </div>
+            <input type="button" id="backButton" class="btn btn-lg btn-primary btn-block" value="Back"/>
+        </form>
+      </div>
+
+        <form id="responseForm" action="/response" method="post">
+            <input type="hidden" id="token" name="token" />
+            <input type="hidden" id="status" name="status" />
+        </form>
+
+    </body>
+</html>

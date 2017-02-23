@@ -1,0 +1,8 @@
+{
+    "restHost" : "localhost",
+    "restPort" : "8080",
+    "restContext" : "/blogger",
+    "adminHost" : "localhost",
+    "adminPort" : "4040",
+    "loginPage" : "http://localhost:4040/login.html"
+}
