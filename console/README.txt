@@ -18,4 +18,7 @@ adminHost - where node server is running
 adminPort - port on which node is running
 loginPage - <NODE SERVER>/login.html
 
+
+To run console service : node server.js
+
 Hit http://host:4040 in your Browser and start publishing Blogs.
