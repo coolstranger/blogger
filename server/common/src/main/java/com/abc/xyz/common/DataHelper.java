@@ -2,8 +2,10 @@ package com.abc.xyz.common;
 
 
 import com.abc.xyz.common.data.Blog;
+import com.abc.xyz.common.data.Comment;
 import com.abc.xyz.common.data.User;
 import com.abc.xyz.schema.BlogEntity;
+import com.abc.xyz.schema.CommentEntity;
 import com.abc.xyz.schema.UserEntity;
 
 public class DataHelper {
@@ -29,5 +31,15 @@ public class DataHelper {
         u.setLoginUid(ue.getLoginUid());
         u.setLastLoginTime(ue.getLastLoginTime());
         return u;
+    }
+
+    public static Comment getComment(CommentEntity ce){
+        Comment c = new Comment();
+        c.setId(ce.getId());
+        c.setComment(ce.getComment());
+        c.setTime(ce.getCommentTime());
+        c.setBlogId(ce.getBlog().getId());
+        c.setUser(ce.getUser().getLoginUid());
+        return c;
     }
 }

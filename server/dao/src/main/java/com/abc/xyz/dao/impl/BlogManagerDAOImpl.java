@@ -3,6 +3,7 @@ package com.abc.xyz.dao.impl;
 
 import com.abc.xyz.dao.BlogManagerDAO;
 import com.abc.xyz.schema.BlogEntity;
+import com.abc.xyz.schema.CommentEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,8 +19,8 @@ public class BlogManagerDAOImpl extends BaseDAOImpl implements BlogManagerDAO{
     protected EntityManager em;
 
     @Override
-    public List<BlogEntity> getBlogs(String userId, String lastEntity, int batchSize, boolean prev){
-        String sql = "from BlogEntity where refUser=:userId ";
+    public List<BlogEntity> getBlogs(String userId, String lastEntity, int batchSize, boolean prev, int state){
+        String sql = "from BlogEntity where refUser=:userId and state=:state ";
         if(lastEntity!=null){
             if(prev){
                 sql += " and id<:lastEntity ";
@@ -33,10 +34,11 @@ public class BlogManagerDAOImpl extends BaseDAOImpl implements BlogManagerDAO{
         }
         Query q = em.createQuery(sql);
         q.setParameter("userId", userId);
+        q.setParameter("state", state);
         if(lastEntity!=null){
             q.setParameter("lastEntity", lastEntity);
         }
-        q.setMaxResults(batchSize+1);
+        q.setMaxResults(batchSize);
 
         List<BlogEntity> res = q.getResultList();
         if(prev) {
@@ -46,6 +48,14 @@ public class BlogManagerDAOImpl extends BaseDAOImpl implements BlogManagerDAO{
             }
             return ret;
         }
+        return res;
+    }
+
+    @Override
+    public List<CommentEntity> getComments(String blogId){
+        Query q = em.createQuery("from CommentEntity where refBlog=:blogId order by commentTime");
+        q.setParameter("blogId", blogId);
+        List<CommentEntity> res = q.getResultList();
         return res;
     }
 

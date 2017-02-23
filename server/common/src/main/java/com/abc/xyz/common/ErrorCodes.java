@@ -14,6 +14,7 @@ public class ErrorCodes {
     public static final int UID_PASSWORD_MISMATCH = 0x1008;
     public static final int USER_ID_LOGINUID_MISSING = 0x1009;
     public static final int USER_NOT_FOUND = 0x100A;
+    public static final int NEW_PASSWORD_EMPTY = 0x100B;
 
 
     //BlogManagerErrorCodes
@@ -44,6 +45,7 @@ public class ErrorCodes {
         ErrorMessage.addMessage(UID_PASSWORD_MISMATCH, "User ID and Password did not matched");
         ErrorMessage.addMessage(USER_ID_LOGINUID_MISSING, "User Id or User LoginId must be present");
         ErrorMessage.addMessage(USER_NOT_FOUND, "User not found with given id or loginuid");
+        ErrorMessage.addMessage(NEW_PASSWORD_EMPTY, "New Password Cannot be empty");
 
 
         ErrorMessage.addMessage(BLOG_NAME_EMPTY, "Blog Name is Empty");

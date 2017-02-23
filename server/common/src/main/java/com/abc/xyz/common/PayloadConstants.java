@@ -26,5 +26,6 @@ public class PayloadConstants {
     public static final String B_LAST_ENTITY = "last_entity";
     public static final String B_PREV = "prev";
     public static final String B_KEYWORD = "keyword";
+    public static final String B_COMMENT = "comment";
 
 }

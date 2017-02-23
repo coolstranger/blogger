@@ -48,7 +48,16 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         }
 
         String ret = createSession(user.getId());
+        updateLoginTime(user.getId());
         return ret;
+    }
+
+    @Override
+    public void logout(String sessionId){
+        SessionEntity se = dao.getUserSessionfromSessionId(sessionId);
+        if(se!=null){
+            dao.deleteEntity(se);
+        }
     }
 
     @Override
@@ -62,7 +71,8 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         nse.setSessionId(UUID.randomUUID().toString());
         nse.setExpiryTime(System.currentTimeMillis() + configManager.getExpiryTime());
         nse.setUser(dao.getEntity(UserEntity.class, userId));
-        return nse.getId();
+        dao.persistEntity(nse);
+        return nse.getSessionId();
     }
 
 
@@ -94,5 +104,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         dao.deleteEntity(se);
         return null;
 
+    }
+
+    private void updateLoginTime(String userId){
+        UserEntity ue = dao.getEntity(UserEntity.class, userId);
+        ue.setLastLoginTime(System.currentTimeMillis());
+        dao.persistEntity(ue);
     }
 }

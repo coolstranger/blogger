@@ -9,4 +9,5 @@ public interface AuthenticationManager {
     String createSession(String userId);
     boolean verifySession(String sessionId);
     User getSessionUser(String sessionId);
+    void logout(String sessionId);
 }

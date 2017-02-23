@@ -49,9 +49,11 @@ public class BaseRestController extends PayloadClasses{
     }
 
     protected String getAuthToken(HttpServletRequest request){
-        for(Cookie cookie : request.getCookies()){
-            if(Constants.AUTH_TOKEN.equalsIgnoreCase(cookie.getName())){
-                return cookie.getValue();
+        if(request.getCookies()!=null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (Constants.AUTH_TOKEN.equalsIgnoreCase(cookie.getName())) {
+                    return cookie.getValue();
+                }
             }
         }
         return null;

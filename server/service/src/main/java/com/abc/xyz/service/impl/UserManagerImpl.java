@@ -62,8 +62,9 @@ public class UserManagerImpl implements UserManager {
         CredentialEntity ce = new CredentialEntity();
         ce.setHash(cryptoManager.base64Encode(hash));
         ce.setSalt(cryptoManager.base64Encode(salt));
-
         ce.setUser(ue);
+
+        dao.persistEntity(ue);
         dao.persistEntity(ce);
 
     }
@@ -103,6 +104,10 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public void changePassword(String oldPassword, String newPassword, String userId) {
+        if(newPassword==null || newPassword.trim().equals("")){
+            throw new BloggerException(ErrorCodes.NEW_PASSWORD_EMPTY);
+        }
+
         boolean verify = verifyCredential(userId, oldPassword);
         if(!verify){
             throw new BloggerException(ErrorCodes.OLD_PASSWORD_MISMATCH);

@@ -6,10 +6,7 @@ import com.abc.xyz.common.PayloadConstants;
 import com.abc.xyz.common.PayloadHelper;
 import com.abc.xyz.common.data.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -19,7 +16,7 @@ public class UserController extends  BaseRestController{
 
     @RequestMapping(value="/user", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createUser(HashMap<String, String> payload, HttpServletRequest request){
+    public ResponseEntity createUser(@RequestBody  HashMap<String, String> payload, HttpServletRequest request){
         User user = PayloadHelper.getUser(payload);
         String password = payload.get(PayloadConstants.U_PASSWORD);
         String confirm_password = payload.get(PayloadConstants.U_CONFIRM_PASSWORD);
@@ -38,7 +35,7 @@ public class UserController extends  BaseRestController{
 
     @RequestMapping(value="/user", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateUser(HashMap<String, String> payload, HttpServletRequest request){
+    public ResponseEntity updateUser(@RequestBody HashMap<String, String> payload, HttpServletRequest request){
         User user = PayloadHelper.getUser(payload);
         userManager.updateUser(user);
         return ok();
@@ -64,10 +61,14 @@ public class UserController extends  BaseRestController{
 
     @RequestMapping(value = "/credentials", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity changePassword(HashMap<String, String> payload, HttpServletRequest request){
+    public ResponseEntity changePassword(@RequestBody HashMap<String, String> payload, HttpServletRequest request){
         User u = getLoginUser(request);
         if(u==null){
             throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
+        }
+
+        if(!payload.get(PayloadConstants.P_NEW).equals(payload.get(PayloadConstants.U_CONFIRM_PASSWORD))){
+            throw new BloggerException(ErrorCodes.PASSWORD_MISMATCH);
         }
 
         userManager.changePassword(payload.get(PayloadConstants.P_OLD), payload.get(PayloadConstants.P_NEW), u.getId());

@@ -1,5 +1,6 @@
 package com.abc.xyz.dao.impl;
 
+import com.abc.xyz.common.Constants;
 import com.abc.xyz.dao.BaseDAO;
 import com.abc.xyz.dao.SearchManagerDAO;
 import com.abc.xyz.schema.BlogEntity;
@@ -20,8 +21,8 @@ public class SearchManagerDAOImpl extends BaseDAOImpl implements SearchManagerDA
 
     @Override
     public List<BlogEntity> searchBlog(String keyword, String lastEntity, int batchSize, boolean prev){
-        String sql = "from BlogEntity where (name like '%:name%' or description like '%:desc%' or body like '%:body%') ";
-        if(lastEntity!=null){
+        String sql = "from BlogEntity where (name like :name or description like :desc or body like :body) and state=:state";
+        if(lastEntity!=null && !lastEntity.trim().equalsIgnoreCase("")){
             if(prev){
                 sql += " and id<:lastEntity ";
             }else {
@@ -33,13 +34,14 @@ public class SearchManagerDAOImpl extends BaseDAOImpl implements SearchManagerDA
             sql+=" desc";
         }
         Query q = em.createQuery(sql);
-        q.setParameter("name", keyword);
-        q.setParameter("desc", keyword);
-        q.setParameter("body", keyword);
+        q.setParameter("name", "%" + keyword + "%");
+        q.setParameter("desc", "%" + keyword + "%");
+        q.setParameter("body", "%" + keyword + "%");
+        q.setParameter("state", Constants.BLOG_STATE_PUBLISHED);
         if(lastEntity!=null){
             q.setParameter("lastEntity", lastEntity);
         }
-        q.setMaxResults(batchSize+1);
+        q.setMaxResults(batchSize);
 
         List<BlogEntity> res = q.getResultList();
         if(prev) {

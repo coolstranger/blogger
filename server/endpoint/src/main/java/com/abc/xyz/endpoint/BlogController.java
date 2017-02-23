@@ -1,16 +1,11 @@
 package com.abc.xyz.endpoint;
 
-import com.abc.xyz.common.BloggerException;
-import com.abc.xyz.common.ErrorCodes;
-import com.abc.xyz.common.PayloadConstants;
-import com.abc.xyz.common.PayloadHelper;
+import com.abc.xyz.common.*;
 import com.abc.xyz.common.data.Blog;
+import com.abc.xyz.common.data.Comment;
 import com.abc.xyz.common.data.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -22,25 +17,27 @@ public class BlogController extends BaseRestController {
 
     @RequestMapping(value="/blog", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity createBlog(HashMap<String, String> payload , HttpServletRequest request){
+    public ResponseEntity createBlog(@RequestBody HashMap<String, String> payload , HttpServletRequest request){
         User u = getLoginUser(request);
         if(u==null){
             throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
         }
         Blog b = PayloadHelper.getBlog(payload);
-        blogManager.createBlog(b);
-        return ok();
+        b.setUserId(u.getId());
+        String id = blogManager.createBlog(b);
+        return okWithPayload(id);
     }
 
 
     @RequestMapping(value="/blog", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateBlog(HashMap<String, String> payload , HttpServletRequest request){
+    public ResponseEntity updateBlog(@RequestBody HashMap<String, String> payload , HttpServletRequest request){
         User u = getLoginUser(request);
         if(u==null){
             throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
         }
         Blog b = PayloadHelper.getBlog(payload);
+        b.setUserId(u.getId());
         blogManager.updateBlog(b);
         return ok();
     }
@@ -55,13 +52,14 @@ public class BlogController extends BaseRestController {
 
     @RequestMapping(value="/blog", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity delete(HttpServletRequest request){
+    public ResponseEntity delete(@RequestBody List<String> blogs,  HttpServletRequest request){
         User u = getLoginUser(request);
         if(u==null){
             throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
         }
-        String id = request.getParameter(PayloadConstants.B_ID);
-        blogManager.deleteBlog(id, u.getId());
+        for(String id : blogs) {
+            blogManager.deleteBlog(id, u.getId());
+        }
         return ok();
     }
 
@@ -72,10 +70,33 @@ public class BlogController extends BaseRestController {
         if(u==null){
             throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
         }
-        List<Blog> res = blogManager.getBlogs(u.getId(), request.getParameter(PayloadConstants.B_LAST_ENTITY), Boolean.parseBoolean(request.getParameter(PayloadConstants.B_PREV)));
+        List<Blog> res = blogManager.getBlogs(u.getId(), request.getParameter(PayloadConstants.B_LAST_ENTITY), Boolean.parseBoolean(request.getParameter(PayloadConstants.B_PREV)), Constants.BLOG_STATE_PUBLISHED);
         return okWithPayload(res);
     }
 
+    @RequestMapping(value="/drafts", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getDrafts(HttpServletRequest request){
+        User u = getLoginUser(request);
+        if(u==null){
+            throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
+        }
+        List<Blog> res = blogManager.getBlogs(u.getId(), request.getParameter(PayloadConstants.B_LAST_ENTITY), Boolean.parseBoolean(request.getParameter(PayloadConstants.B_PREV)), Constants.BLOG_STATE_DRAFT);
+        return okWithPayload(res);
+    }
+
+    @RequestMapping(value = "/publish", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity publishBlog(@RequestBody List<String> blogs, HttpServletRequest request){
+        User u = getLoginUser(request);
+        if(u==null){
+            throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
+        }
+        for(String id : blogs) {
+            blogManager.publishBlog(id, u.getId());
+        }
+        return ok();
+    }
 
     @RequestMapping(value="/search", method = RequestMethod.GET)
     @ResponseBody
@@ -89,6 +110,23 @@ public class BlogController extends BaseRestController {
         return okWithPayload(res);
     }
 
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity addComment(@RequestBody HashMap<String,String> payload, HttpServletRequest request){
+        User u = getLoginUser(request);
+        if(u==null){
+            throw new BloggerException(ErrorCodes.NO_WEB_SESSION_PRESENT);
+        }
 
+        blogManager.publishComment(payload.get(PayloadConstants.B_COMMENT), payload.get(PayloadConstants.B_ID), u.getId());
+        return ok();
+    }
+
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity getComment(HttpServletRequest request){
+        List<Comment> res = blogManager.getComments(request.getParameter(PayloadConstants.B_ID));
+        return okWithPayload(res);
+    }
 
 }

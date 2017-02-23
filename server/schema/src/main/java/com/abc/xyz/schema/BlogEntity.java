@@ -15,6 +15,7 @@ public class BlogEntity extends BaseEntity {
     private int revision;
     private UserEntity user;
     private String refUser;
+    private int state;
 
     @Basic
     @Column(name = "name")
@@ -37,7 +38,7 @@ public class BlogEntity extends BaseEntity {
     }
 
     @Basic
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "TEXT")
     public String getBody() {
         return body;
     }
@@ -94,5 +95,15 @@ public class BlogEntity extends BaseEntity {
 
     public void setRefUser(String refUser) {
         this.refUser = refUser;
+    }
+
+    @Basic
+    @Column(name = "state")
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
