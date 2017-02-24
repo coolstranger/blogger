@@ -52,7 +52,7 @@ var displayHomePage = function (){
 }
 
 var doLogin = function(){
-    window.location = config.loginPage;
+    window.location = "/login.html";
 }
 
 var doLogout = function(){
@@ -81,7 +81,7 @@ var displayCreateBlog = function(){
                 contentType: 'application/json',
                 data: reqData,
                 success: function (data) {
-                    displayHomePage();
+                    displayMyDrafts('', false);
                 },
                 error: function (err) {
                     if(err.status==401){
