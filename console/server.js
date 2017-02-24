@@ -240,7 +240,7 @@ app.post(BLOG, function (req, res) {
     if(req.session.token) {
         makeRequestWithAuth(req,res,BLOG, POST, req.body);
     }else{
-        res.redirect(LOGIN_PAGE);
+        res.status(HTTP_UNAUTORIZED).end("Invalid Session");
     }
 
 });
@@ -254,7 +254,7 @@ app.put(BLOG, function (req, res) {
     if(req.session.token) {
         makeRequestWithAuth(req,res,BLOG, PUT, req.body);
     }else{
-        res.redirect(LOGIN_PAGE);
+        res.status(HTTP_UNAUTORIZED).end("Invalid Session");
     }
 
 });
@@ -268,7 +268,7 @@ app.delete(BLOG, function (req, res) {
     if(req.session.token) {
         makeRequestWithAuth(req,res,BLOG, DELETE, req.body);
     }else{
-        res.redirect(LOGIN_PAGE);
+        res.status(HTTP_UNAUTORIZED).end("Invalid Session");
     }
 
 });
@@ -355,7 +355,7 @@ app.put(PUBLISH, function (req, res) {
     if(req.session.token) {
         makeRequestWithAuth(req,res,PUBLISH, PUT, req.body);
     }else{
-        res.redirect(LOGIN_PAGE);
+        res.status(HTTP_UNAUTORIZED).end("Invalid Session");
     }
 
 });
@@ -377,13 +377,10 @@ app.get(COMMENT, function (req, res) {
  Desc       :   For adding Comments
  ************************************************/
 app.post(COMMENT, function (req, res) {
-    console.log("In Comment POST");
     if(req.session.token) {
-        console.log("With Token");
         makeRequestWithAuth(req,res,COMMENT, POST, req.body);
     }else{
-        console.log("No Token");
-        res.redirect(LOGIN_PAGE);
+        res.status(HTTP_UNAUTORIZED).end("Invalid Session");
     }
 
 });

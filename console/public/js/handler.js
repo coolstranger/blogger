@@ -84,8 +84,12 @@ var displayCreateBlog = function(){
                     displayHomePage();
                 },
                 error: function (err) {
+                    if(err.status==401){
+                        window.location = config.loginPage;
+                        return;
+                    }
                     resp = JSON.parse(err.responseText);
-                        alert('Some error has occoured please try again:' + resp.message);
+                    alert('Some error has occoured please try again:' + resp.message);
                 },
                 type: 'POST',
                 url: '/blog'
@@ -135,6 +139,10 @@ var displayUpdateBlog = function(id, lastEntity, prev, from){
                         }
                     },
                     error: function (err) {
+                        if(err.status==401){
+                            window.location = config.loginPage;
+                            return;
+                        }
                         resp = JSON.parse(err.responseText);
                         alert('Some error has occoured please try again:' + resp.message);
                     },
@@ -430,6 +438,10 @@ var displayViewBlog = function (id, keyword, lastEntity, prev, from){
                             displayViewBlog(id, keyword, lastEntity, prev);
                         },
                         error: function(err){
+                            if(err.status==401){
+                                window.location = config.loginPage;
+                                return;
+                            }
                             resp = JSON.parse(err.responseText);
                             alert('Some error has occoured please try again: ' + resp.message);
                         },
@@ -520,6 +532,10 @@ function deleteBlog(count, lastEntity, prev, from) {
             }
         },
         error: function (err) {
+            if(err.status==401){
+                window.location = config.loginPage;
+                return;
+            }
             resp = JSON.parse(err.responseText);
             alert('Some error has occoured please try again:' + resp.message);
         },
