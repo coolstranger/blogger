@@ -1,5 +1,8 @@
 package com.abc.xyz.security;
 
+/**
+ * Service for operations like base64 enc/dec , password hashing
+ */
 public interface CryptoManager {
 
     public byte[] getSalt(int len);

@@ -5,6 +5,17 @@ import com.abc.xyz.common.data.Comment;
 
 import java.util.List;
 
+/**
+ * This Service is used to perform all operations related to blogs.
+ * - create blog
+ * - update blog
+ * - delete blog
+ * - add comment
+ * - read blog
+ * - read comments
+ * -publish blog
+ *
+ */
 public interface BlogManager {
 
     String createBlog(Blog blog);

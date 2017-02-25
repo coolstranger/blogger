@@ -16,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is basic implementation for blog searching based on sql like %...% operation.
+ * Another implementation can be used based on Elastic Search or Lucene
+ */
 @Component
 @Transactional(value= Constants.TRANSACTION_MANAGER, propagation = Propagation.REQUIRED)
 public class SearchManagerImpl implements SearchManager{

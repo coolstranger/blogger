@@ -13,6 +13,12 @@ import java.util.HashMap;
 @RestController
 public class AuthenticationController extends BaseRestController{
 
+    /**
+     *
+     * @param payload {"j_username":"aamir","j_password":"password"}
+     * @param request
+     * @return session Id in response body
+     */
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity login(@RequestBody HashMap<String,String> payload, HttpServletRequest request){
@@ -20,6 +26,11 @@ public class AuthenticationController extends BaseRestController{
         return okWithPayload(sessionId);
     }
 
+    /**
+     *
+     * @param request containing cookie BLOGGER_AUTH_TOKEN=&lt;SESSIONID&gt;
+     * @return JSON for User object in session
+     */
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getSession(HttpServletRequest request){
@@ -30,6 +41,11 @@ public class AuthenticationController extends BaseRestController{
         return okWithPayload(u);
     }
 
+    /**
+     *
+     * @param request containing cookie BLOGGER_AUTH_TOKEN=&lt;SESSIONID&gt;
+     * @return
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity logout(HttpServletRequest request){

@@ -3,6 +3,13 @@ package com.abc.xyz.service;
 
 import com.abc.xyz.common.data.User;
 
+/**
+ * This service is used do all user operations.
+ * - createUser
+ * - updateUser
+ * - findUser
+ * - verify Credentials
+ */
 public interface UserManager {
 
     void createUser(User user, String password);

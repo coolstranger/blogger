@@ -14,6 +14,12 @@ import java.util.HashMap;
 @RestController
 public class UserController extends  BaseRestController{
 
+    /**
+     *
+     * @param payload {"f_name":"123","l_name":"456","email":"a@b.c","login":"789","password":"1234","confirm_password":"1234"}
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/user", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity createUser(@RequestBody  HashMap<String, String> payload, HttpServletRequest request){
@@ -33,6 +39,12 @@ public class UserController extends  BaseRestController{
         return ok();
     }
 
+    /**
+     *
+     * @param payload {"f_name":"123","l_name":"456","email":"a@b.c","login":"789", "id":"1234567890"}
+     * @param request containing cookie BLOGGER_AUTH_TOKEN=&lt;SESSIONID&gt;
+     * @return
+     */
     @RequestMapping(value="/user", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity updateUser(@RequestBody HashMap<String, String> payload, HttpServletRequest request){
@@ -42,6 +54,11 @@ public class UserController extends  BaseRestController{
     }
 
 
+    /**
+     *
+     * @param request containing user Id as query ?id=1234
+     * @return
+     */
     @RequestMapping(value="/user", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getUser(HttpServletRequest request){
@@ -59,6 +76,12 @@ public class UserController extends  BaseRestController{
             return notFound("User Not Found");
     }
 
+    /**
+     *
+     * @param payload {"old_password":"password","new_password":"1234","confirm_password":"1234"}
+     * @param request containing cookie BLOGGER_AUTH_TOKEN=&lt;SESSIONID&gt;
+     * @return
+     */
     @RequestMapping(value = "/credentials", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity changePassword(@RequestBody HashMap<String, String> payload, HttpServletRequest request){
