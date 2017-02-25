@@ -104,8 +104,6 @@ app.post(RESPONSE, function(req, res){
     var token = req.body.token;
     var status = req.body.status;
 
-    console.log("token=" + token);
-
     if(status==200){
         req.session.token = token;
         res.redirect(HOME_PAGE);
@@ -394,7 +392,6 @@ var server = app.listen(4040, function(){
 ************************************************/
 
 function makeGETRequest(req, res, url){
-    console.log("GET " + url);
     var status, out='', error;
     var options = {
         host: config.restHost,
@@ -409,10 +406,8 @@ function makeGETRequest(req, res, url){
 
             sres.on("data", function (chunk) {
                 status = sres.statusCode;
-                console.log(status);
                 if (status == HTTP_OK) {
                     out += chunk.toString(utf8);
-                    console.log(out);
                 } else {
                     try {
                         error = JSON.parse(chunk.toString(utf8));
@@ -451,7 +446,6 @@ function makeGETRequest(req, res, url){
 }
 
 function makeGETRequestWithAuth(req, res, url){
-    console.log("GET " + url);
     var status, out='', error;
     var options = {
         host: config.restHost,
@@ -469,10 +463,8 @@ function makeGETRequestWithAuth(req, res, url){
 
             sres.on("data", function (chunk) {
                 status = sres.statusCode;
-                console.log(status);
                 if (status == HTTP_OK) {
                     out += chunk.toString(utf8);
-                    console.log(out);
                 } else {
                     try {
                         error = JSON.parse(chunk.toString(utf8));
@@ -512,8 +504,6 @@ function makeGETRequestWithAuth(req, res, url){
 
 function makeRequest(req, res, url, method, body){
     var payload = JSON.stringify(body);
-    console.log(method + " " + url);
-    console.log(payload);
     var status, out, error;
     var options = {
         host: config.restHost,
@@ -530,13 +520,10 @@ function makeRequest(req, res, url, method, body){
         var sreq = http.request(options, function (sres) {
 
             sres.on("data", function (chunk) {
-                console.log("going to read resp 1");
                 try {
                     status = sres.statusCode;
-                    console.log(status);
                     if (status == HTTP_OK) {
                         out = chunk.toString(utf8);
-                        console.log(out);
                     } else {
                         try {
                             error = JSON.parse(chunk.toString(utf8));
@@ -585,8 +572,6 @@ function makeRequest(req, res, url, method, body){
 
 function makeRequestWithAuth(req, res, url, method, body){
     var payload = JSON.stringify(body);
-    console.log(method + " " + url);
-    console.log(payload);
     var status, out, error;
     var options = {
         host: config.restHost,
@@ -604,13 +589,10 @@ function makeRequestWithAuth(req, res, url, method, body){
         var sreq = http.request(options, function (sres) {
 
             sres.on("data", function (chunk) {
-                console.log("going to read resp 1");
                 try {
                     status = sres.statusCode;
-                    console.log(status);
                     if (status == HTTP_OK) {
                         out = chunk.toString(utf8);
-                        console.log(out);
                     } else {
                         try {
                             error = JSON.parse(chunk.toString(utf8));
