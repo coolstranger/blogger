@@ -181,6 +181,13 @@ public class BlogManagerImpl implements BlogManager{
             throw new BloggerException(ErrorCodes.BLOG_NOT_FOUND);
         }
 
+        if(comment==null || comment.trim().equals("")){
+            throw new BloggerException(ErrorCodes.BLOG_COMMENT_EMPTY);
+        }
+        if(comment.length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Comment length exceeded 255 characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
+
         CommentEntity ce = new CommentEntity();
         ce.setComment(comment);
         ce.setUser(ue);

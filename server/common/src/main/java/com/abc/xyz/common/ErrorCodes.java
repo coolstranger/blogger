@@ -26,6 +26,7 @@ public class ErrorCodes {
     public static final int BLOG_NOT_FOUND = 0x2005;
     public static final int BLOG_ID_EMPTY = 0x2006;
     public static final int BLOG_ANOTHER_USER = 0x2007;
+    public static final int BLOG_COMMENT_EMPTY = 0x2008;
 
 
     //AuthenticationManager Error Codes
@@ -57,6 +58,7 @@ public class ErrorCodes {
         ErrorMessage.addMessage(BLOG_NOT_FOUND, "Blog not Found");
         ErrorMessage.addMessage(BLOG_ID_EMPTY, "Blog Id is Empty");
         ErrorMessage.addMessage(BLOG_ANOTHER_USER , "Operation Not permitted, Not Blog Owner");
+        ErrorMessage.addMessage(BLOG_COMMENT_EMPTY, "Comment is empty");
 
         ErrorMessage.addMessage(NO_WEB_SESSION_PRESENT , "No User Session Present");
         ErrorMessage.addMessage(AUTHENTICATION_FAILED , "User Authentication Failed");
