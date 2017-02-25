@@ -32,17 +32,32 @@ public class UserManagerImpl implements UserManager {
         if(user.getFirstName()==null || user.getFirstName().trim().equals("")){
             throw new BloggerException(ErrorCodes.FIRST_NAME_EMPTY);
         }
+        if(user.getFirstName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("First Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(user.getLastName()==null || user.getLastName().trim().equals("")){
             throw new BloggerException(ErrorCodes.LAST_NAME_EMPTY);
+        }
+        if(user.getLastName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Last Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
         }
         if(user.getLoginUid()==null || user.getLoginUid().trim().equals("")){
             throw new BloggerException(ErrorCodes.LOGINUID_EMPTY);
         }
+        if(user.getLoginUid().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Login Id length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(user.getEmail()==null || user.getEmail().trim().equals("")){
             throw new BloggerException(ErrorCodes.EMAIL_EMPTY);
         }
+        if(user.getEmail().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Email length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(password==null || password.trim().equals("")){
             throw new BloggerException(ErrorCodes.PASSWORD_EMPTY);
+        }
+        if(password.length()>Constants.PASSWORD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Password length exceeds %d characters", Constants.PASSWORD_LENGTH));
         }
 
         UserEntity ue = dao.getUserFromLoginUid(user.getLoginUid().toLowerCase().trim());
@@ -88,11 +103,20 @@ public class UserManagerImpl implements UserManager {
         if(user.getFirstName()==null || user.getFirstName().trim().equals("")){
             throw new BloggerException(ErrorCodes.FIRST_NAME_EMPTY);
         }
+        if(user.getFirstName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("First Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(user.getLastName()==null || user.getLastName().trim().equals("")){
             throw new BloggerException(ErrorCodes.LAST_NAME_EMPTY);
         }
+        if(user.getLastName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Last Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(user.getEmail()==null || user.getEmail().trim().equals("")){
             throw new BloggerException(ErrorCodes.EMAIL_EMPTY);
+        }
+        if(user.getEmail().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Email length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
         }
 
         ue.setFirstName(user.getFirstName());
@@ -106,6 +130,10 @@ public class UserManagerImpl implements UserManager {
     public void changePassword(String oldPassword, String newPassword, String userId) {
         if(newPassword==null || newPassword.trim().equals("")){
             throw new BloggerException(ErrorCodes.NEW_PASSWORD_EMPTY);
+        }
+
+        if(newPassword.length()>Constants.PASSWORD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Password length exceeds %d characters", Constants.PASSWORD_LENGTH));
         }
 
         boolean verify = verifyCredential(userId, oldPassword);

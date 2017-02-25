@@ -37,8 +37,14 @@ public class BlogManagerImpl implements BlogManager{
         if(blog.getName()==null || blog.getName().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);
         }
+        if(blog.getName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Blog Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(blog.getDesc()==null || blog.getDesc().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);
+        }
+        if(blog.getDesc().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Blog Description length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
         }
         if(blog.getBody()==null || blog.getBody().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);
@@ -66,8 +72,14 @@ public class BlogManagerImpl implements BlogManager{
         if(blog.getName()==null || blog.getName().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);
         }
+        if(blog.getName().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Blog Name length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
+        }
         if(blog.getDesc()==null || blog.getDesc().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);
+        }
+        if(blog.getDesc().length()>Constants.DEFAULT_FIELD_LENGTH){
+            throw new BloggerException(ErrorCodes.FIELD_LENGTH_EXCEEDED, String.format("Blog Description length exceeds %d characters", Constants.DEFAULT_FIELD_LENGTH));
         }
         if(blog.getBody()==null || blog.getBody().trim().equals("")){
             throw new BloggerException(ErrorCodes.BLOG_NAME_EMPTY);

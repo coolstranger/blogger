@@ -15,6 +15,7 @@ public class ErrorCodes {
     public static final int USER_ID_LOGINUID_MISSING = 0x1009;
     public static final int USER_NOT_FOUND = 0x100A;
     public static final int NEW_PASSWORD_EMPTY = 0x100B;
+    public static final int FIELD_LENGTH_EXCEEDED = 0x100C;
 
 
     //BlogManagerErrorCodes
@@ -46,6 +47,7 @@ public class ErrorCodes {
         ErrorMessage.addMessage(USER_ID_LOGINUID_MISSING, "User Id or User LoginId must be present");
         ErrorMessage.addMessage(USER_NOT_FOUND, "User not found with given id or loginuid");
         ErrorMessage.addMessage(NEW_PASSWORD_EMPTY, "New Password Cannot be empty");
+        ErrorMessage.addMessage(FIELD_LENGTH_EXCEEDED, "Field Length Cannot be more than 255");
 
 
         ErrorMessage.addMessage(BLOG_NAME_EMPTY, "Blog Name is Empty");
